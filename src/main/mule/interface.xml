@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<mule xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:apikit="http://www.mulesoft.org/schema/mule/mule-apikit" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd http://www.mulesoft.org/schema/mule/mule-apikit http://www.mulesoft.org/schema/mule/mule-apikit/current/mule-apikit.xsd ">
-    <apikit:config name="americanflight-api-config" api="resource::c42529fb-49b4-4c72-a1df-dbbe38d18a76:americanflight-api:1.0.1:raml:zip:americanflight-api.raml" outboundHeadersMapName="outboundHeaders" httpStatusVarName="httpStatus" />
+<mule xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:apikit="http://www.mulesoft.org/schema/mule/mule-apikit" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd http://www.mulesoft.org/schema/mule/mule-apikit http://www.mulesoft.org/schema/mule/mule-apikit/current/mule-apikit.xsd ">
+    <apikit:config name="americanflight-api-config" api="resource::c42529fb-49b4-4c72-a1df-dbbe38d18a76:americanflight-api:1.0.3:raml:zip:americanflight-api.raml" outboundHeadersMapName="outboundHeaders" httpStatusVarName="httpStatus" />
     <flow name="americanflight-api-main">
         <http:listener config-ref="HTTP_Listener_config" path="/api/*">
             <http:response statusCode="#[vars.httpStatus default 200]">
@@ -138,10 +138,10 @@ output application/json
         </ee:transform>
     </flow>
     <flow name="get:\flights:americanflight-api-config">
-		<flow-ref doc:name="Flow Reference" doc:id="12148079-63e8-4dab-a7b8-fcfce52e94a5" name="GetFlights"/>
+        <flow-ref doc:name="Flow Reference" doc:id="12148079-63e8-4dab-a7b8-fcfce52e94a5" name="GetFlights" />
     </flow>
     <flow name="get:\flights\(ID):americanflight-api-config">
-		<flow-ref doc:name="Flow Reference" doc:id="5f466805-1e0b-4fd0-ac59-9b1178841ca6" name="getFlightsByID"/>
+        <flow-ref doc:name="Flow Reference" doc:id="5f466805-1e0b-4fd0-ac59-9b1178841ca6" name="getFlightsByID" />
     </flow>
     <flow name="post:\flights:application\json:americanflight-api-config">
         <ee:transform xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
@@ -151,6 +151,23 @@ output application/json
 ---
 {
   message: "Flight added (but not really)"
+}]]></ee:set-payload>
+            </ee:message>
+        </ee:transform>
+    </flow>
+    <flow name="put:\flights\(ID):application\json:americanflight-api-config">
+        <ee:transform xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core">
+            <ee:variables>
+                <ee:set-variable variableName="ID">attributes.uriParams.'ID'</ee:set-variable>
+            </ee:variables>
+        </ee:transform>
+        <ee:transform xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+            <ee:message>
+                <ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+{
+  message: "Flight updated (but not really)"
 }]]></ee:set-payload>
             </ee:message>
         </ee:transform>

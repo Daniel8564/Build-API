@@ -12,7 +12,7 @@ http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/
 	<db:config name="Database_Config" doc:name="Database Config" doc:id="605ce396-de18-4372-9f85-2527d1f7e395" >
 		<db:my-sql-connection host="mudb.learn.mulesoft.com" port="3306" user="mule" password="mule" database="training" />
 	</db:config>
-	<flow name="GetFlights" doc:id="4cf834d5-5157-4668-950b-6908fc2431d8" initialState="stopped">
+	<flow name="GetFlights" doc:id="4cf834d5-5157-4668-950b-6908fc2431d8">
 		<db:select doc:name="Select" doc:id="6cd92e08-7f9f-49b1-8090-871da0bd4153" config-ref="Database_Config">
 			<db:sql ><![CDATA[SELECT * FROM american]]></db:sql>
 		</db:select>
